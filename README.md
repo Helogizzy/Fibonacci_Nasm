@@ -18,11 +18,11 @@
  ```
 nasm -f elf64 fib.asm
 ld fib.o -o fib.x
-gdb fib.x
+
  ```
  
  **Para executar use os seguintes comandos:**
  ```
-b fim
-r
+./fib.x
+
  ```
