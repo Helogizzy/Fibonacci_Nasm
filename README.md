@@ -20,7 +20,7 @@ nasm -f elf64 fib.asm
 ld fib.o -o fib.x
  ```
  
- **Para executar use os seguintes comandos:**
+ **Para executar use o seguinte comando:**
  ```
 ./fib.x
  ```
