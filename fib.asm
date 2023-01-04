@@ -14,7 +14,7 @@ section .data
     erro: db "Digito invalido!",10, 0
     erro2: equ $ - erro
 
-    erro3: db "Fim de Execução", 10
+    erro3: db "Fim de Execução! Estouro do tamanho do registrador!", 10
     erro4: equ $ - erro3 
     
     inicio_arq: db "fib("
@@ -36,7 +36,6 @@ section .text
     global _start
 
 _start:
-    
     ;zera os registradores
     xor rax, rax
     xor rdi, rdi
@@ -46,8 +45,6 @@ _start:
     xor rdx, rdx
     xor ebx, ebx 
 
-;----------------------------------
-
 escrever:
     mov rax, 1 
     mov rdi, 1
@@ -56,15 +53,13 @@ escrever:
     syscall
 
 leitura:
-mov dword [entrada2], maxChars
+    mov dword [entrada2], maxChars
     mov rax, 0
     mov rdi, 1
     lea rsi, [entrada]
     mov edx, entrada2
     syscall
     mov [entrada2], eax
-
-;----------------------------------
 
 ;string para int
 conversao:
@@ -77,26 +72,25 @@ conversao:
     
     mov bl, [esi]
     cmp bl, 10  ;compara para ver se o número tem apenas 1 dígito
-    je fibo
+    jne verifica2digitos
 
-    inc esi ; incrementa o ponteiro
-    mov cl, [esi]
-    cmp cl, 10 ;compara para ver se o número tem 2 dígitos
-    jne EncerrarPrograma
+    mov [num], rax
+    jmp fibo
+
+    verifica2digitos:
+        inc esi ; incrementa o ponteiro
+        mov cl, [esi]
+        cmp cl, 10 ;compara para ver se o número tem 2 dígitos
+        jne EncerrarPrograma
 
     sub bl, "0"
     imul rax, 10
     add al, bl
 
     mov [num], rax
-    
-;----------------------------------  
 
-    ;como fib de 94 para cima estoura o tamanho do reg, o código se encerra  
-    cmp rax, 93   
+    cmp rax, 93   ;como fib de 94 para cima estoura o tamanho do reg, o código se encerra  
     jg PararPrograma
-
-;----------------------------------
 
 fibo:   
     xor r9, r9
@@ -117,8 +111,6 @@ fibo:
         mov r14, r15 ;fib1 = aux
         inc r9
         jmp inicio
-
-;----------------------------------
 
 ConcatenacaoNomeArquivo:    
     xor r15, r15
@@ -141,22 +133,20 @@ ConcatenacaoNomeArquivo:
 
     mov [f], eax
 
-    escreve_arquivo: 
+escreve_arquivo: 
     mov qword[valor], r13
     mov rax, 1           
-    mov edi, [f] ; fd
+    mov edi, [f] 
     lea rsi, [valor]
     mov edx, 8     
     syscall
 
-    fecha:
-    mov rax, 3  ; fechar arquivo
+fecha:
+    mov rax, 3 
     mov edi, [f]
     syscall
 
     jmp fim
-
-;----------------------------------
 
 PararPrograma:
     mov rax, 1
@@ -167,16 +157,12 @@ PararPrograma:
 
     jmp fim
   
-;----------------------------------
-
 EncerrarPrograma:
     mov rax, 1
     mov rdi, 1
     lea rsi, [erro]
     mov edx, erro2
     syscall
-  
-;----------------------------------
 
 fim:
     mov rax, 60
