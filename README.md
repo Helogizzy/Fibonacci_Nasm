@@ -2,7 +2,6 @@
 
 
 ### Um código iterativo que calcule o n-éssimo número fibonacci iterativo.<br>
->Colaboradores: Gabriel Mazzuco ([GitHub Profile](https://github.com/gabrielmazz)) e Heloisa Alves ([Github Profile](https://github.com/Helogizzy))
 
 <br>**Funcionamento:**<br>
  - Máximo de dígitos: 2<br>
