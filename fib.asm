@@ -7,7 +7,6 @@
 %define userWR 644o 
 
 section .data
-
     str: db "Fibonacci requerido: ", 10, 0
     str2: equ $ - str
     
@@ -45,6 +44,8 @@ _start:
     xor rdx, rdx
     xor ebx, ebx 
 
+;----------------------------------
+
 escrever:
     mov rax, 1 
     mov rdi, 1
@@ -60,6 +61,8 @@ leitura:
     mov edx, entrada2
     syscall
     mov [entrada2], eax
+
+;----------------------------------
 
 ;string para int
 conversao:
@@ -92,6 +95,8 @@ conversao:
     cmp rax, 93   ;como fib de 94 para cima estoura o tamanho do reg, o código se encerra  
     jg PararPrograma
 
+;----------------------------------
+
 fibo:   
     xor r9, r9
     xor r13, r13 ;fib = 0
@@ -111,6 +116,8 @@ fibo:
         mov r14, r15 ;fib1 = aux
         inc r9
         jmp inicio
+
+;----------------------------------
 
 ConcatenacaoNomeArquivo:    
     xor r15, r15
@@ -145,8 +152,9 @@ fecha:
     mov rax, 3 
     mov edi, [f]
     syscall
-
     jmp fim
+
+;----------------------------------
 
 PararPrograma:
     mov rax, 1
@@ -154,15 +162,18 @@ PararPrograma:
     lea rsi, [erro3]
     mov edx, erro4
     syscall
-
     jmp fim
-  
+
+;----------------------------------
+
 EncerrarPrograma:
     mov rax, 1
     mov rdi, 1
     lea rsi, [erro]
     mov edx, erro2
     syscall
+
+;----------------------------------
 
 fim:
     mov rax, 60
